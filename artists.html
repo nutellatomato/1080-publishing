@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artists — 1080</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css?v=1793146334">
+<style>
+.roster { margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 32px 20px; }
+.roster .ph { aspect-ratio: 4 / 5; margin-bottom: 14px; transition: background .2s; }
+.roster a:hover .ph { background: #ffe4dc; color: var(--tomato); }
+.roster b { display: block; font-weight: 500; font-size: 16px; letter-spacing: -0.01em; }
+.roster span { display: block; font-size: 14px; color: var(--muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top"></header>
+
+  <main class="content">
+    <h1>Artists</h1>
+    <p class="lead">The songwriters, producers and artists we work with.</p>
+    <div class="roster"></div>
+  </main>
+
+  <footer class="foot" id="contact"></footer>
+</div>
+<script src="site.js?v=1793146334"></script>
+<script>
+// Dummy roster; cards are built before spiral.js runs so their placeholder spirals get drawn.
+const ROSTER = [
+  ["Artist name 01", "Songwriter, producer"], ["Artist name 02", "Artist"], ["Artist name 03", "Songwriter"],
+  ["Artist name 04", "Producer"], ["Artist name 05", "Artist, songwriter"], ["Artist name 06", "Composer"],
+  ["Artist name 07", "Songwriter"], ["Artist name 08", "Producer, mixer"],
+];
+document.querySelector(".roster").innerHTML = ROSTER.map(([n, r]) =>
+  `<a href="#"><div class="ph"><svg data-spiral="compass" data-w="3" viewBox="-32 -32 64 64"></svg></div><b>${n}</b><span>${r}</span></a>`).join("");
+</script>
+<script src="spiral.js?v=1793146334"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1080 Publishing</title>
+<meta name="description" content="1080 Publishing, 1080 Music Supervision, 1080 Sync.">
+<!-- Trap: favicon is a hand-copied compass path; keep it in step with compass() in spiral.js. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-32 -32 64 64'%3E%3Cpath d='M 0,0 A 4.4 4.4 0 0 0 -8.8,0 A 8.8 8.8 0 0 0 8.8,0 A 13.2 13.2 0 0 0 -17.6,0 A 17.6 17.6 0 0 0 17.6,0 A 22 22 0 0 0 -26.4,0 A 26.4 26.4 0 0 0 26.4,0' fill='none' stroke='%23ff5a36' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css?v=1793146334">
+<style>
+/* Home only: the spiral is a background layer, wider than the page, centred on the bottom edge. */
+.page { position: relative; overflow: hidden; }
+.top, .foot { position: relative; z-index: 2; }
+main { position: relative; z-index: 1; align-self: start; justify-self: center; padding-top: clamp(40px, 9vh, 110px); }
+.spiral { position: absolute; left: 50%; bottom: 0; width: max(104vw, 140svh); aspect-ratio: 1; translate: -50% 50%; color: var(--tomato); animation: drift 24s linear infinite; }
+.spiral polyline { stroke-width: 6px; vector-effect: non-scaling-stroke; } /* Why: fixed 6px line at every screen size. */
+@keyframes drift { to { rotate: -360deg; } }
+
+/* 1080 stays put; the window's width follows the current word so the pair stays centred. */
+h1 { display: flex; align-items: flex-start; gap: 0.26em; font-size: clamp(32px, 5vw, 72px); letter-spacing: -0.035em; line-height: 1.15; font-weight: 500; white-space: nowrap; }
+.win { display: block; height: 1.15em; overflow: hidden; transition: width .9s cubic-bezier(.65,0,.35,1); }
+.list { display: grid; justify-items: start; font-weight: 300; transition: transform .9s cubic-bezier(.65,0,.35,1); }
+
+@media (max-width: 640px) { h1 { font-size: 28px; } .spiral polyline { stroke-width: 4px; } }
+@media (prefers-reduced-motion: reduce) { .spiral { animation: none; } .list, .win { transition: none; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top" data-service="0"></header>
+
+  <svg class="spiral" data-spiral="single" viewBox="-32 -32 64 64" aria-hidden="true"></svg>
+
+  <main>
+    <h1>
+      <span class="sr"></span>
+      <span aria-hidden="true">1080</span>
+      <span class="win" aria-hidden="true"><span class="list"></span></span>
+    </h1>
+  </main>
+
+  <footer class="foot" id="contact"></footer>
+</div>
+
+<script src="site.js?v=1793146334"></script>
+<script src="spiral.js?v=1793146334"></script>
+<script>
+const list = document.querySelector(".list"), win = document.querySelector(".win");
+
+document.querySelector("h1 .sr").textContent = SERVICES.map(s => `1080 ${s.name}`).join(", ");
+// Extra copy of the first word at the end lets the loop snap back invisibly.
+[...SERVICES, SERVICES[0]].forEach(s => list.append(Object.assign(document.createElement("span"), { textContent: s.name })));
+
+let i = 0;
+function show(k, animate = true) {
+  if (!animate) list.style.transition = win.style.transition = "none";
+  i = k;
+  list.style.transform = `translateY(${-k * 1.15}em)`;
+  win.style.width = list.children[k].offsetWidth + "px";
+  if (!animate) { void list.offsetWidth; list.style.transition = win.style.transition = ""; }
+}
+
+document.fonts.ready.then(() => show(0, false)); // widths are only right once the web font is in
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => {
+  show(i + 1);
+  if (i === SERVICES.length) setTimeout(() => show(0, false), 950);
+}, 3000);
+</script>
+</body>
+</html>

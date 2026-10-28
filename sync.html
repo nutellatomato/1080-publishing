@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1080 Sync</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css?v=1793146334">
+<style>
+.placements { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.placements .ph { aspect-ratio: 16 / 10; margin-bottom: 10px; }
+.placements b { display: block; font-weight: 500; font-size: 13px; }
+.placements span { color: var(--muted); font-size: 12px; }
+@media (max-width: 640px) { .placements { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top" data-service="2"></header>
+
+  <main class="splash">
+    <div>
+      <h1>1080 <span>Sync</span></h1>
+      <p class="lead">We license music from our catalogue for picture. Master and publishing from one contact.</p>
+      <ul class="offer">
+        <li>Pitching to briefs</li>
+        <li>One-stop licensing, master and publishing</li>
+        <li>Fast quotes</li>
+        <li>Edits, stems and instrumentals</li>
+      </ul>
+    </div>
+
+    <div class="mock" aria-label="Example recent placements">
+      <div class="bar"><b>Recent placements</b><span>2026</span></div>
+      <div class="placements">
+        <div><div class="ph"><svg data-spiral="compass" data-w="3" viewBox="-32 -32 64 64"></svg></div><b>TV commercial</b><span>Client name · Track title 01</span></div>
+        <div><div class="ph"><svg data-spiral="compass" data-w="3" viewBox="-32 -32 64 64"></svg></div><b>Series</b><span>Show title · Track title 02</span></div>
+        <div><div class="ph"><svg data-spiral="compass" data-w="3" viewBox="-32 -32 64 64"></svg></div><b>Game trailer</b><span>Game title · Track title 03</span></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="foot" id="contact"></footer>
+</div>
+<script src="site.js?v=1793146334"></script>
+<script src="spiral.js?v=1793146334"></script>
+</body>
+</html>

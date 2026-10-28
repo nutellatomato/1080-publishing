@@ -1,0 +1,97 @@
+/* Shared by every page. Page-only styles live in each page's <style>. */
+
+/* Everett is commercial and installed later; Hanken Grotesk stands in until then. */
+@font-face { font-family: "Everett"; font-weight: 300; src: local("Everett Light"), url("fonts/Everett-Light.woff2") format("woff2"); }
+@font-face { font-family: "Everett"; font-weight: 400; src: local("Everett Regular"), url("fonts/Everett-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Everett"; font-weight: 500; src: local("Everett Medium"), url("fonts/Everett-Medium.woff2") format("woff2"); }
+
+:root {
+  --ink: #141414;
+  --paper: #f4f2ee;
+  --muted: #8a877f;
+  --faint: #b9b5ac;
+  --rule: #d9d5cc;
+  --tint: #ebe8e2;
+  --tomato: #ff5a36;
+  /* Everett is the only typeface; Hanken Grotesk is just its stand-in. */
+  --font: "Everett", "Hanken Grotesk", system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body { background: var(--paper); color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+svg { display: block; overflow: visible; }
+a { color: inherit; text-decoration: none; transition: color .2s; }
+a:hover { color: var(--tomato); }
+
+.page { min-height: 100svh; padding: 28px 40px; display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: minmax(0, 1fr); } /* Trap: without minmax(0,…) a wide table stretches the whole page. */
+
+/* ---------- top bar ---------- */
+.top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; font-size: 17px; position: relative; z-index: 2; }
+.top ul { display: flex; gap: 36px; list-style: none; padding-top: 5px; }
+.top ul a[aria-current="page"] { color: var(--tomato); }
+
+/* Logo: spiral + 1080 + current service. The other services sit underneath, hidden until hover. */
+.brand { display: flex; align-items: flex-start; font-size: 20px; letter-spacing: -0.02em; line-height: 30px; }
+.brand .mark { width: 30px; height: 30px; margin-right: 12px; color: var(--tomato); transition: transform .9s cubic-bezier(.65,0,.35,1); }
+/* A full turn brings the compass mark back to its resting shape. */
+.brand:hover .mark, .brand:focus-within .mark { transform: rotate(360deg); }
+@media (prefers-reduced-motion: reduce) { .brand .mark { transition: none; } }
+.brand .home { font-weight: 500; margin-right: 0.28em; }
+.brand .svcs { position: relative; font-weight: 300; padding-bottom: 6px; }
+.brand .others { position: absolute; top: 30px; left: 0; display: grid; white-space: nowrap; opacity: 0; visibility: hidden; transform: translateY(-3px); transition: opacity .2s, transform .2s, visibility 0s .2s; }
+.brand .others a { color: var(--faint); }
+.brand .others a:hover, .brand .others a:focus-visible { color: var(--tomato); outline: none; }
+.brand:hover .others, .brand:focus-within .others, .brand.open .others { opacity: 1; visibility: visible; transform: none; transition: opacity .2s, transform .2s; }
+
+/* ---------- footer ---------- */
+.foot { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--rule); padding-top: 18px; font-size: 15px; }
+.foot .k { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- service splash pages ---------- */
+.splash { align-self: center; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 72px; align-items: center; padding: 56px 0; }
+.splash h1 { font-size: clamp(34px, 4vw, 56px); font-weight: 500; letter-spacing: -0.035em; line-height: 1.05; }
+.splash h1 span { font-weight: 300; }
+.splash .lead { margin-top: 20px; max-width: 420px; font-size: 17px; line-height: 1.55; color: #4a4843; }
+.splash .offer { margin-top: 36px; list-style: none; max-width: 420px; border-top: 1px solid var(--rule); }
+.splash .offer li { padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 15px; display: flex; gap: 14px; }
+.splash .offer li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--tomato); margin-top: 7px; flex: none; }
+.mock { background: #fff; border: 1px solid var(--rule); border-radius: 10px; padding: 22px; font-size: 13px; box-shadow: 0 1px 0 var(--rule), 0 24px 48px -32px rgba(20,20,20,.25); }
+.mock .bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.mock .bar b { font-weight: 500; font-size: 14px; }
+.mock .bar span { color: var(--muted); font-size: 12px; }
+.mock table { width: 100%; border-collapse: collapse; }
+.mock th { text-align: left; font-weight: 400; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 0 8px 8px 0; border-bottom: 1px solid var(--rule); }
+.mock td { padding: 10px 8px 10px 0; border-bottom: 1px solid var(--tint); white-space: nowrap; }
+.mock .pill { display: inline-block; padding: 2px 8px; border-radius: 99px; background: var(--tint); font-size: 11px; }
+.mock .pill.on { background: #ffe4dc; color: #c23a17; }
+.ph { background: var(--tint); border-radius: 6px; display: grid; place-items: center; color: var(--faint); }
+.ph svg { width: 28%; max-width: 48px; height: auto; aspect-ratio: 1; }
+
+/* ---------- plain content pages (catalogue, artists, about, contact) ---------- */
+.content { padding: 72px 0 80px; }
+.content > h1 { font-size: clamp(34px, 4vw, 56px); font-weight: 300; letter-spacing: -0.035em; line-height: 1.05; }
+.content > .lead { margin-top: 16px; max-width: 520px; font-size: 17px; line-height: 1.55; color: #4a4843; }
+.content h2 { font-size: 13px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 56px 0 18px; }
+
+@media (max-width: 900px) {
+  .splash { grid-template-columns: 1fr; gap: 40px; padding: 40px 0; }
+  .mock { overflow-x: auto; }
+}
+
+@media (max-width: 640px) {
+  .page { padding: 20px 16px; }
+  /* Phone: the links move to their own full-width row so all four fit; padding makes ~40px tap targets. */
+  .top { flex-wrap: wrap; row-gap: 6px; }
+  .top ul { width: 100%; justify-content: space-between; gap: 0; font-size: 16px; padding-top: 0; border-top: 1px solid var(--rule); }
+  .top ul a { display: block; padding: 10px 0; }
+  .brand { font-size: 18px; line-height: 40px; }
+  .brand .mark { width: 26px; height: 26px; margin: 7px 10px 0 0; }
+  /* Opened service list stays in the flow and pushes the link row down instead of covering it. */
+  .brand .others { position: static; display: none; transform: none; }
+  .brand:hover .others, .brand:focus-within .others, .brand.open .others { display: grid; }
+  .brand .others a { padding: 6px 0; line-height: 28px; }
+  .foot a { display: inline-block; padding: 10px 0; }
+  .foot { flex-direction: column; gap: 6px; }
+}
